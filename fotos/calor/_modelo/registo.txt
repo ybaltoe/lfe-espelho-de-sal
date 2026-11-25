@@ -1,0 +1,12 @@
+# Registo de um ensaio de calor (copiar a pasta _modelo para, por exemplo, es1_e1)
+# Fotos do ecrã nesta pasta, de 30 em 30 s, durante 15 min.
+
+calibracao = es1_calor     # pasta em fotos/calibracao/ com a referência e o pente desta montagem
+t0 = 14:32:10              # hora (relógio do telemóvel) a que se tirou o flutuador; ou o nome da foto tirada nesse momento
+T_cima = 50.0              # °C, camada de cima, no início
+T_baixo = 20.0             # °C, camada de baixo, no início
+# T_cima_fim = 44.0        # no fim (só para o relatório: perdas de calor)
+# T_baixo_fim = 22.0
+
+excluir =                  # fotos a não usar, separadas por vírgulas (ex.: IMG_1203.jpg, IMG_1204.jpg)
+notas =                    # porquê se excluíram fotos, o que correu mal, quem fez o quê

@@ -1,0 +1,35 @@
+RESULTADOS FINAIS E ORÇAMENTO DE INCERTEZAS
+===========================================
+
+Uso:  python tabela_final.py
+
+ANTES, correr (cada um escreve o seu resultados_*.json):
+  ../calor/analisar_calor.py          -> ../calor/resultados_calor.json
+  ../sal/analisar_sal.py              -> ../sal/resultados_sal.json
+  ../espelho_de_sal/espelho.py        -> ../espelho_de_sal/resultados_espelho_de_sal.json
+  (opcional) espelho.py --pasta ../../fotos/espelho_calor -> resultados_espelho_calor.json
+
+A TABELA (a do plano, aula 4)
+  κ (calor)       largura da bossa       vs κ da água à temperatura média
+  D (sal)         largura da bossa       vs D do NaCl à temperatura do ensaio
+  κ / D           razão (n.º de Lewis)   vs a razão das tabelas (~100)
+  Δn (calor)      área da bossa          vs n(T_baixo) − n(T_cima)
+  Δn (calor)      espelho (se houver)
+  Δn (sal)        área da bossa          vs dn/dw × w
+  Δn (sal)        espelho de sal         vs dn/dw × w
+  z = (medido − referência)/u. Os valores de referência são APROXIMADOS (comum.py): antes do
+  relatório, confirmar cada um na bibliografia e citar a fonte.
+
+OS DOIS Δn DO SAL
+  O ponto forte da análise: dois métodos independentes (área da bossa e ângulo do espelho).
+  z = (área − espelho)/√(u² + u²). |z| < 2: o modelo está validado. Se não, a diferença é o que se
+  discute no relatório.
+
+ORÇAMENTO DE INCERTEZAS (o que o script escreve)
+  κ e D:    ajuste de σ²(t) | dispersão entre ensaios | escala do pente (conta a dobrar)
+  Δn área:  ajuste/ensaios | Z | L | escalas (pente e grelha)
+  Δn espelho: θ entre passagens | resolução da rampa | placa/base
+  A temperatura no sal (~2 %/°C em D) conta na comparação com a tabela, não na medida.
+  Sistemáticos a discutir (não entram nos números): mistura no enchimento (t0 grande, resíduos),
+  perdas de calor (queda de Δn), aproximação de tanque fino (fotos postas de parte), gradiente
+  térmico residual no sal.

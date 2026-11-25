@@ -1,0 +1,36 @@
+SAL: COEFICIENTE DE DIFUSÃO D DO NaCl PELA BOSSA
+================================================
+
+Uso:  python analisar_sal.py                      (todos os ensaios em fotos/sal/)
+      python analisar_sal.py --ensaio es2_s1      (só um)
+      python analisar_sal.py --teste              (fotos sintéticas: D = 1,5e-9, Δn = 0,009,
+                                                   t0 = 200 e 400 s)
+
+PROTOCOLO
+  1. Solução a 5 % em massa: 5,0 g de sal + 95,0 g de água, na balança. Dissolver bem e deixar
+     chegar à temperatura da sala. A água pura de cima tem de estar à MESMA temperatura
+     (1 °C de diferença já dá um gradiente térmico de ~1 × 10⁻⁴ em n, ~1 % do sinal do sal).
+  2. Calibração da montagem com a cuvete de 10 mm, Z ≈ 1 m (fotos/calibracao/<montagem>/).
+  3. Solução até meio da cuvete; água pura por cima com o flutuador, mais devagar do que no calor.
+     Tirar o flutuador = t0 (registar a hora).
+  4. Foto a cada 5 min durante 45–60 min. Entretanto fazem-se ensaios de calor ou o espelho.
+  Registo em fotos/sal/<ensaio>/registo.txt (modelo em fotos/sal/_modelo/): sal_g, agua_g e T.
+
+O QUE O CÓDIGO FAZ
+  Igual ao calor (ver ../calor/LEIA-ME.txt, passos 1 a 8), com duas diferenças:
+  - Δn do ensaio = média ponderada das áreas (no sal não há perdas; a variação em %/min deve dar ~0,
+    e se não der é sinal de mistura ou de gradiente térmico);
+  - a referência é D(T) = 1,48e-9 m²/s a 25 °C corrigido com T/η(T) (~2 %/°C), e
+    Δn = 1,76e-3 × (% de sal). Valores aproximados: confirmar na bibliografia.
+
+PLANO B (sem vareta, plano da aula 1)
+  Usar o ponto do laser e subir o recipiente na plataforma elevatória de 2 em 2 mm, medindo δ
+  no ecrã (papel milimétrico) em cada altura. Só dá para o sal (no calor muda tudo em segundos).
+  Na pasta do ensaio, em vez de fotos, um perfis.csv com colunas t_s;y_mm;delta_mm (uma linha por
+  ponto; t_s igual para todos os pontos do mesmo perfil). Modelo em
+  fotos/sal/_modelo/perfis_plano_B_exemplo.csv. No registo, Z_mm, u_Z_mm, L_mm e u_L_mm em vez
+  de 'calibracao'.
+
+O QUE ESPERAR (previsões, Z = 1 m, L = 10 mm)
+  σ ≈ 1,3 mm a 10 min, 2,2 mm a 30 min, 3,1 mm a 60 min; δ máx ≈ 28, 16 e 12 mm.
+  D ≈ 1,3–1,5 × 10⁻⁹ m²/s, κ/D ≈ 100.

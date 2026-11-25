@@ -1,0 +1,49 @@
+CALIBRAÇÃO DA MONTAGEM A (pente LEGO, papel milimétrico, referência)
+====================================================================
+
+Uso:  python calibrar.py                         (todas as montagens em fotos/calibracao/)
+      python calibrar.py --montagem es1_calor    (só uma)
+      python calibrar.py --teste                 (fotos sintéticas, para ver se o código funciona)
+
+AS FOTOS (fotos/calibracao/<montagem>/, mesma posição do telemóvel que os ensaios)
+  referencia.jpg   recipiente cheio de água homogénea (sem fronteira): traço reto, sem bossa
+  pente.jpg        o mesmo, com o pente encostado à parede de ENTRADA do recipiente:
+                   placas 1×2 e 1×4 alternadas, a 1×4 a sobressair e a cortar a folha
+  registo.txt      Z_mm, L_mm e incertezas (ver o modelo em fotos/calibracao/_modelo/)
+  Uma montagem nova sempre que muda o recipiente, Z, o ecrã ou o telemóvel. Por exemplo, es1_calor
+  (5 cm, Z = 2 m) e es3_sal (cuvete de 10 mm, Z = 1 m).
+
+O QUE O CÓDIGO FAZ
+  1. Reduz as fotos para ~2000 px de lado (o centro do traço é sub-píxel, não se perde precisão)
+     e roda-as como o telemóvel as mostra.
+  2. Traço do laser: em cada coluna da foto, "vermelho" = R − max(G, B). Tira a mediana de cada
+     linha e de cada coluna, para as linhas do papel desaparecerem (mesmo se forem cor de laranja).
+     A posição do traço é o centroide do vermelho à volta do máximo (sub-píxel).
+  3. Pente: as colunas onde o traço se apaga são as sombras. Fica só com as sombras de largura
+     ~meio passo (tira o menisco, as pontas do traço e as paredes) e ajusta
+         x_sombra = x0 + m · (6,4 mm × índice)
+     m = píxeis por mm de altura no tanque; x0 = origem das alturas (primeira sombra).
+     Se alguma sombra ficar a mais de 1/4 de passo da reta, sai, e a reta volta a ser ajustada.
+  4. Grelha: perfis da luminosidade ao longo das linhas e das colunas, em faixas de 150 px (para a
+     grelha poder estar um pouco rodada). A autocorrelação tem picos a cada 1 mm; o primeiro pico,
+     afinado pelos picos seguintes (k·P), dá p = píxeis por mm do papel.
+  5. Escreve M = m/p. Com a lente de +100 mm a folha é paralela e M ≈ 1. Sem lente (tubo de água
+     a ~1 m do recipiente) a folha continua a abrir até ao ecrã e M > 1: o aviso é normal. Se M
+     estiver longe do esperado, confirmar na figura se a grelha apanhou as linhas de 5 ou 10 mm.
+
+A FIGURA (calibracao_<montagem>.png): CONFIRMAR SEMPRE
+  (a) o traço azul-claro tem de estar em cima do traço vermelho em todo o comprimento.
+  (b) uma linha azul por cada sombra do pente, e nenhuma noutros sítios.
+  (c) os pontos na reta, com resíduos de décimas de mm.
+  (d) os pontos nos picos da autocorrelação, a cada 1 mm. Se caírem nos de 5 ou 10 mm, pôr
+      px_por_mm_ecra no registo (medir na foto quantos px tem 1 cm do papel, dividir por 10).
+
+PROBLEMAS
+  "Não encontrei as sombras do pente": o pente não corta a folha, ou as sombras estão desfocadas.
+     São precisas ≥ 3 sombras nítidas.
+  AVISO "sobre-exposto": o centro do traço está branco. Baixar a exposição (bloqueada) e repetir.
+  Outro objeto vermelho na foto: pôr recorte = x0; x1; y0; y1 no registo.
+
+INCERTEZAS QUE SAEM DAQUI
+  u(m)/m: do ajuste das sombras (~0,1–0,5 %). Conta a DOBRAR em D (σ ∝ 1/m, D ∝ σ²).
+  u(p)/p: da grelha. Só entra em Δn (a altura da bossa está em mm do ecrã).

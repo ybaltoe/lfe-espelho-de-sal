@@ -1,0 +1,19 @@
+# Registo de um ensaio de sal (copiar a pasta _modelo para, por exemplo, es2_s1)
+# Fotos do ecrã nesta pasta, de 5 em 5 min, durante 45 a 60 min.
+
+calibracao = es2_sal       # pasta em fotos/calibracao/ (cuvete de 10 mm, Z ≈ 1 m)
+t0 = 10:05:00              # hora a que se tirou o flutuador, ou o nome da foto tirada nesse momento
+sal_g = 5.0                # sal pesado (g)
+agua_g = 95.0              # água pesada (g)
+T = 21.0                   # °C, as duas camadas (têm de estar à mesma temperatura)
+
+excluir =
+notas =
+
+# PLANO B (sem vareta): medir δ ponto a ponto subindo o recipiente na plataforma de 2 em 2 mm.
+# Nesse caso não há fotos: pôr nesta pasta um perfis.csv (ver perfis_plano_B_exemplo.csv) e
+# trocar a linha 'calibracao' por:
+# Z_mm = 1000
+# u_Z_mm = 3
+# L_mm = 10.0
+# u_L_mm = 0.05

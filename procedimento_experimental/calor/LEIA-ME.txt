@@ -1,0 +1,52 @@
+CALOR: DIFUSIVIDADE TÉRMICA κ PELA BOSSA
+========================================
+
+Uso:  python analisar_calor.py                      (todos os ensaios em fotos/calor/)
+      python analisar_calor.py --ensaio es1_e1      (só um; pode repetir --ensaio)
+      python analisar_calor.py --reta               (ajusta também uma reta de fundo)
+      python analisar_calor.py --lim-fino 0.1       (critério de tanque fino mais exigente)
+      python analisar_calor.py --teste              (fotos sintéticas: κ = 1,4e-7, Δn = 0,0035,
+                                                     perdas de 1 %/min, t0 = 40 e 70 s)
+
+PROTOCOLO (plano da aula 1)
+  1. Calibração da montagem (fotos/calibracao/<montagem>/, ver ../calibracao/LEIA-ME.txt).
+  2. Água fria até meio do recipiente de 5 cm; flutuador de esferovite à superfície.
+  3. Água quente (~50 °C) devagar sobre o flutuador (~1 min). Tirar o flutuador: é o t0.
+     Registar a HORA do telemóvel nesse momento (ou tirar uma foto logo a seguir).
+  4. Foto do ecrã a cada 30 s durante 15 min. Temperaturas em cima e em baixo no início, a cada
+     5 min e no fim.
+  5. Esvaziar e repetir. Pelo menos 3 ensaios por sessão.
+  Cada ensaio numa pasta fotos/calor/<ensaio>/ com o registo.txt (modelo em fotos/calor/_modelo/).
+
+O QUE O CÓDIGO FAZ (serie.py e comum.py)
+  1. Tempo de cada foto: hora EXIF da foto − t0 do registo. Sem EXIF (fotos do WhatsApp), pôr na
+     pasta um tempos.csv com "ficheiro;t_s".
+  2. Em cada foto, o traço (como na calibração), menos o traço de referência = desvio δ em px.
+     δ em mm do ecrã = px / p; altura no tanque y = (x − x0) / m.
+  3. Ajuste de δ(y) = A·exp(−(y − yc)²/2σ²) + c (+ c1·y com --reta). Dá σ (mm no tanque),
+     A (mm no ecrã) e área = A·σ·√(2π).
+  4. Fotos postas de parte (ficam no CSV com o motivo, nunca se apagam):
+       - aproximação de tanque fino: L·A/(2n·Z_ef·σ) > 0,2 (as primeiras, quando a bossa é estreita);
+       - bossa cortada: menos de 1,5σ de asa de um dos lados (o traço não chega);
+       - bossa para cima (foto invertida?) ou ajuste falhado;
+       - as que estão em "excluir" no registo.
+  5. σ² contra t, reta ponderada (pesos 1/u(σ²)², u(σ²) = 2σ·u(σ)): declive = 2κ, t0 = ordenada/declive.
+     Se χ²/ν > 1, a incerteza do declive é multiplicada por √(χ²/ν).
+  6. Δn = área/(Z_ef·L), Z_ef = Z + L/(2n). No calor desce com o tempo (perdas pelas paredes e pela
+     superfície): ajusta-se uma reta e o Δn do ensaio é o de t = 0. A queda em %/min quantifica as
+     perdas.
+  7. Verificação: 1/A² também tem de crescer em linha reta (A ∝ 1/σ). No calor corrige-se A pela
+     reta do Δn (senão as perdas curvam a reta). O t0 desta reta tem de ser parecido com o do σ².
+  8. Junta os ensaios: média ponderada de κ e desvio-padrão da média entre ensaios; fica a maior
+     das duas, somada em quadratura com a da escala (2·u(m)/m).
+  9. Compara com κ da tabela à temperatura média (T_cima + T_baixo)/2 e Δn com n(T_baixo) − n(T_cima).
+
+INCERTEZAS (ver também ../resultados_finais/)
+  κ: ajuste de σ²(t) e dispersão entre ensaios (estatísticas), escala do pente (×2).
+  Δn: ajuste da área, Z (fita, ± 2–3 mm), L (paquímetro), escalas m e p.
+  Sistemáticos a discutir: mistura no enchimento (t0 grande, resíduos com forma), perdas de calor
+  (queda de Δn), convecção (traço ondulado), aproximação de tanque fino nas primeiras fotos.
+
+O QUE ESPERAR (previsões, Z = 2 m, L = 5 cm)
+  σ ≈ 4 mm a 1 min, 9 mm a 5 min, 13 mm a 10 min; δ máx ≈ 38, 17 e 12 mm.
+  κ ≈ 1,4–1,5 × 10⁻⁷ m²/s.

@@ -1,0 +1,30 @@
+PREVISÕES (antes de medir)
+==========================
+
+Uso:  python previsoes.py
+      python previsoes.py --Z-calor 1500 --L-calor 50     (outra montagem)
+      python previsoes.py --Tq 45 --Tf 22 --sal-pct 3     (outras águas)
+      python previsoes.py --t0-calor 30                   (enchimento demora ~30 s)
+
+AS CONTAS
+  σ² = 2D(t + t0)                       largura da bossa (altura no tanque)
+  δ_máx = Z_ef·L·Δn / (σ·√(2π))         altura da bossa no ecrã, Z_ef = Z + L/(2n)
+  tanque fino = L·δ_máx / (2n·Z_ef·σ)   tem de ser ≪ 1 (L²|dn/dy|/2n ≪ σ, escrito com o que se mede)
+  traço ±3σ = 6σ                        altura no tanque que a folha tem de cobrir
+  espelho: cos φ_c = n_cima/n_b, sin θ_ar = n_b·sin φ_c, tan θ = k·placa/base
+
+VALORES DE TABELA (comum.py, APROXIMADOS: confirmar na bibliografia e citar no relatório)
+  n da água em função de T (tabela a 589 nm, menos 0,0019 para 633 nm)
+  κ da água em função de T (k/ρc_p)
+  D do NaCl a 25 °C = 1,48e-9 m²/s, corrigido com T/η(T)
+  dn/dw do NaCl = 1,76e-3 por % de massa
+
+O QUE TIRAR DAQUI
+  1. Com Z = 2 m e L = 5 cm, as primeiras fotos de calor (t < 1 min) têm δ ≈ 40–50 mm e o critério
+     de tanque fino perto de 0,1–0,2: são as mais arriscadas. O código põe de parte acima de 0,2.
+  2. O traço tem de cobrir ±3σ: no calor, aos 10–15 min, são 80–100 mm de altura no tanque.
+     Se a linha só tiver ~5 cm (lente de +100 mm), as fotos finais ficam sem asas e o ajuste piora
+     (o código avisa e tira as que têm menos de 1,5σ de asa de cada lado). Duas saídas: ensaios de
+     calor mais curtos (≤ 8 min), ou uma linha mais alta.
+  3. No sal tudo cabe: σ vai de ~1 a ~4 mm numa hora.
+  4. Espelho: o sal dá k entre 12 e 13 placas; cada placa são ~0,7°, ou seja ±8 % em Δn.

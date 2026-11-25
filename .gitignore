@@ -3,3 +3,20 @@ __pycache__/
 .ipynb_checkpoints/
 .venv/
 *.pdf
+
+# Fotos e vídeos: pesados, ficam fora do repositório (ver fotos/README.md)
+fotos/**/*.jpg
+fotos/**/*.jpeg
+fotos/**/*.JPG
+fotos/**/*.JPEG
+fotos/**/*.png
+fotos/**/*.heic
+fotos/**/*.HEIC
+fotos/**/*.mov
+fotos/**/*.MOV
+fotos/**/*.mp4
+fotos/**/*.MP4
+termometro.jpg
+
+# Figuras dos testes com dados sintéticos
+procedimento_experimental/**/*teste*.png

@@ -1,0 +1,20 @@
+# Registo do espelho de sal (montagem B). Os ensaios vão em ensaios.csv, uma linha por passagem:
+#   tempo_min      minutos desde o enchimento do tanque comprido (30, 60, 90)
+#   k_refletido    último número de placas em que o feixe ainda volta para baixo
+#   k_atravessa    primeiro número de placas em que o feixe atravessa para a camada de cima
+#   sentido        sobe (a acrescentar placas) ou desce (a tirar)
+#   observador     iniciais de quem decidiu (critério fixado antes!)
+# Os vídeos ficam nesta pasta.
+
+tipo = sal                 # sal, ou calor para o espelho com água quente (então T_cima e T_baixo)
+T = 21.0                   # °C
+sal_g = 5.0
+agua_g = 95.0
+
+placa_mm = 3.2             # medir 10 placas empilhadas com o paquímetro e dividir por 10
+u_placa_mm = 0.02
+base_mm = 256.0            # distância horizontal entre o apoio da rampa e a pilha de placas (32 espigas)
+u_base_mm = 0.5
+geometria = tan            # tan se base_mm é a distância horizontal; sin se é o comprimento da rampa
+
+notas =

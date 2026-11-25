@@ -1,0 +1,19 @@
+# Registo de uma montagem A (copiar a pasta _modelo para, por exemplo, es1_calor)
+# Fotos nesta pasta: referencia.jpg (água homogénea) e pente.jpg (com o pente LEGO).
+# Vírgula ou ponto decimal, tanto faz. '#' começa um comentário.
+
+Z_mm = 2000        # distância da parede de saída do recipiente ao ecrã (fita métrica)
+u_Z_mm = 3
+L_mm = 50.0        # espessura INTERIOR do recipiente, na direção do feixe (paquímetro)
+u_L_mm = 0.05
+# n_meio = 1.333   # índice da água (só entra em Z_ef = Z + L/2n)
+
+# Opcional: se a grelha do papel não for encontrada sozinha (ver figura da calibração),
+# medir na foto quantos píxeis tem 1 cm do papel e pôr aqui (px por mm, na foto original):
+# px_por_mm_ecra = 13.2
+# u_px_por_mm_ecra = 0.1
+
+# Opcional: só procurar o traço dentro deste retângulo (píxeis da foto original):
+# recorte = x0; x1; y0; y1
+
+notas =

@@ -1,0 +1,43 @@
+ESPELHO DE SAL: Δn PELO ÂNGULO-LIMITE
+=====================================
+
+Uso:  python espelho.py                                  (fotos/espelho_de_sal/)
+      python espelho.py --pasta ../../fotos/espelho_calor (outro tanque; tipo = calor no registo)
+      python espelho.py --teste                           (ensaios sintéticos)
+
+PROTOCOLO
+  1. Tanque comprido (20–30 cm): sal em baixo, água pura em cima, logo no início da sessão.
+     Uma gota de leite em cada camada antes de encher, para o feixe se ver.
+  2. Laser de ponto na rampa LEGO (32 espigas), a entrar pela parede lateral, 1–2 cm abaixo da
+     fronteira.
+  3. Acrescentar placas uma a uma, a filmar. Registar o último k em que o feixe volta para baixo
+     e o primeiro em que atravessa. Repetir a subir e a descer.
+  4. Repetir aos 30, 60 e 90 min.
+  5. O critério "atravessa" fixa-se ANTES (por exemplo: o centro do feixe chega à superfície) e
+     decidem dois observadores. Se for difícil, decidir pelo vídeo.
+  6. Medir a espessura das placas (10 empilhadas / 10) e a base da rampa, para o registo.
+  Uma linha por passagem em ensaios.csv: tempo_min;k_refletido;k_atravessa;sentido;observador;notas
+
+A FÍSICA
+  n·cos φ = constante ao longo do raio. Um raio lançado na camada de baixo (n_b) com ângulo φ volta
+  se encontrar n = n_b·cos φ. O último que volta tem cos φ_c = n_cima/n_b, ou seja
+      Δn = n_b − n_cima = n_b·(1 − cos φ_c)
+  Na parede vertical: sin θ_ar = n_b·sin φ_c (o vidro de faces paralelas não muda isto).
+  Na rampa: tan θ = k·placa/base (ou sin, se a base for o comprimento da rampa: geometria = sin).
+  φ_c depende só de Δn, não da largura do gradiente: o ângulo não deve mudar com o tempo.
+
+O QUE O CÓDIGO FAZ
+  1. Para cada passagem: θ do último k refletido e do primeiro que atravessa; θ = ponto médio,
+     meia divisão = metade da diferença (~0,35°).
+  2. Δn a partir de θ, com n_cima = n da água pura à temperatura do registo e n_b = n_cima + Δn
+     (iterado; converge logo). Não precisa de saber a concentração de sal.
+  3. Média de θ. Incerteza: dispersão entre passagens (σ/√n), resolução da rampa (meia divisão/√3,
+     distribuição uniforme) e placa/base, em quadratura. Também escreve a versão do plano
+     (meia divisão inteira), que é mais conservadora.
+  4. Teste da previsão: reta θ(tempo); |z| < 2 = compatível com "não muda".
+  5. Compara a subir com a descer (histerese do critério).
+  6. Compara com Δn = 1,76e-3 × (% de sal), se o registo tiver sal_g e agua_g.
+
+O QUE ESPERAR
+  Sal a 5 %: θ ≈ 8,8° no ar, entre 12 e 13 placas. Calor (20/50 °C): θ ≈ 5,9°, entre 8 e 9 placas.
+  Cada placa ≈ 0,7°, ou seja ~±8 % em Δn por meia placa. Uma base mais comprida dá passos menores.
